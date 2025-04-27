@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from "@mantine/core";
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from "@mantine/core";
 
 import type { Route } from "./+types/root";
 import "@mantine/core/styles.css";
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <MantineProvider>
+        <MantineProvider defaultColorScheme="auto">
           {children}
         </MantineProvider>
         <ScrollRestoration />

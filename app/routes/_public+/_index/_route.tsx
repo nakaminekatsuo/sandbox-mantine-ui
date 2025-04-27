@@ -1,8 +1,9 @@
-import { Title } from "@mantine/core";
+import { Box, Divider, Group, Space, Title } from "@mantine/core";
 import type { Route } from "./+types/_route";
-import { ProgressCard } from "./PRogressCard";
+import { ProgressCard } from "./ProgressCard";
 import { Await } from "react-router";
 import { Suspense } from "react";
+import { ToggleThemeButton } from "~/design-system/ToggleThemeButton";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
@@ -19,15 +20,19 @@ export async function clientLoader() {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
-    <>
-    <Title order={1}>
+    <Box>
+      <Group justify="flex-end" mt="md" mr="md">
+        <ToggleThemeButton />
+      </Group>
+      <Divider my="md" />
+     <Title order={1}>
       <Suspense fallback={"loading..."}>
         <Await resolve={loaderData.message}>
           {(message) => message}
         </Await>
       </Suspense>
     </Title>
-    <div style={{
+    <Box style={{
       padding: "1rem",
       display: "grid",
       gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
@@ -36,7 +41,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       {Array.from({length: 10}).map((_, index) => (
         <ProgressCard key={index} />
       ))}
-    </div>
-    </>
+    </Box>
+    </Box>
   )
 }
