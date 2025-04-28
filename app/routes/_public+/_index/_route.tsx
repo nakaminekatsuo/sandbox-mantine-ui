@@ -1,6 +1,6 @@
-import { Box, Divider, Group, Title } from "@mantine/core";
+import { Box, Button, Divider, Group, Title } from "@mantine/core";
 import { Suspense } from "react";
-import { Await } from "react-router";
+import { Await, href, useFetcher } from "react-router";
 import { ToggleThemeButton } from "~/design-system/ToggleThemeButton";
 import type { Route } from "./+types/_route";
 import { ProgressCard } from "./ProgressCard";
@@ -11,7 +11,7 @@ export function meta(_: Route.MetaArgs) {
 	];
 }
 
-export async function clientLoader() {
+export async function clientLoader(_: Route.ClientLoaderArgs) {
 	const message = new Promise<string>((resolve) =>
 		setTimeout(() => resolve("Hello from the client loader!"), 1000),
 	);
@@ -20,10 +20,18 @@ export async function clientLoader() {
 	};
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function Page({ loaderData }: Route.ComponentProps) {
+	const fetcher = useFetcher();
+	const submitting = fetcher.state === "submitting";
 	return (
 		<Box>
 			<Group justify="flex-end" mt="md" mr="md">
+				{fetcher.state}
+				<fetcher.Form method="post" action={href("/resource/test")}>
+					<Button type="submit" loading={submitting}>
+						{fetcher.data?.message ?? "Test"}
+					</Button>
+				</fetcher.Form>
 				<ToggleThemeButton />
 			</Group>
 			<Divider my="md" />
