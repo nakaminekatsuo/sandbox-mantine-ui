@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Group, Title } from "@mantine/core";
 import { Suspense } from "react";
 import { Await, href, useFetcher } from "react-router";
-import { ToggleThemeButton } from "~/design-system/ToggleThemeButton";
+import { ToggleThemeButton } from "~/ui/ToggleThemeButton/ToggleThemeButton";
 import type { Route } from "./+types/_route";
 import { ProgressCard } from "./ProgressCard";
 export function meta(_: Route.MetaArgs) {

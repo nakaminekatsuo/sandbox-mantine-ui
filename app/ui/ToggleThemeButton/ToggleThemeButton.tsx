@@ -1,7 +1,7 @@
+import { ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import cx from "clsx";
-import { ActionIcon, useMantineColorScheme } from "@mantine/core";
-import classes from "./index.module.css";
+import classes from "./ToggleThemeButton.module.css";
 
 export function ToggleThemeButton() {
 	const { toggleColorScheme } = useMantineColorScheme();
