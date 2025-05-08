@@ -1,4 +1,5 @@
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from "@mantine/core";
+import "@mantine/core/styles.css";
 import {
 	Links,
 	Meta,
@@ -7,9 +8,8 @@ import {
 	ScrollRestoration,
 	isRouteErrorResponse,
 } from "react-router";
-
-import "@mantine/core/styles.css";
 import type { Route } from "./+types/root";
+import { Header } from "./ui/Header/Header";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -44,7 +44,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-	return <Outlet />;
+	return (
+		<>
+			<Header />
+			<Outlet />
+		</>
+	);
 }
 export function HydrateFallback() {
 	return <p>Loading...</p>;

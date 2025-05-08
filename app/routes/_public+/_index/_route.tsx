@@ -1,7 +1,6 @@
-import { Box, Button, Divider, Group, Title } from "@mantine/core";
+import { Box, Flex, Title } from "@mantine/core";
 import { Suspense } from "react";
-import { Await, href, useFetcher } from "react-router";
-import { ToggleThemeButton } from "~/ui/ToggleThemeButton/ToggleThemeButton";
+import { Await } from "react-router";
 import type { Route } from "./+types/_route";
 import { ProgressCard } from "./ProgressCard";
 export function meta(_: Route.MetaArgs) {
@@ -21,20 +20,8 @@ export async function clientLoader(_: Route.ClientLoaderArgs) {
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-	const fetcher = useFetcher();
-	const submitting = fetcher.state === "submitting";
 	return (
-		<Box>
-			<Group justify="flex-end" mt="md" mr="md">
-				{fetcher.state}
-				<fetcher.Form method="post" action={href("/resource/test")}>
-					<Button type="submit" loading={submitting}>
-						{fetcher.data?.message ?? "Test"}
-					</Button>
-				</fetcher.Form>
-				<ToggleThemeButton />
-			</Group>
-			<Divider my="md" />
+		<Flex direction="column" gap="md" p="md">
 			<Title order={1}>
 				<Suspense fallback={"loading..."}>
 					<Await resolve={loaderData.message}>{(message) => message}</Await>
@@ -42,7 +29,6 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 			</Title>
 			<Box
 				style={{
-					padding: "1rem",
 					display: "grid",
 					gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
 					gap: "1rem",
@@ -54,6 +40,6 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 						<ProgressCard key={item.id} />
 					))}
 			</Box>
-		</Box>
+		</Flex>
 	);
 }
