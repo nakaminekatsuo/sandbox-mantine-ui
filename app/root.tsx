@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				<MantineProvider defaultColorScheme="auto">{children}</MantineProvider>
+				{children}
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -45,10 +45,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
 	return (
-		<>
+		<MantineProvider defaultColorScheme="auto">
 			<Header />
 			<Outlet />
-		</>
+		</MantineProvider>
 	);
 }
 export function HydrateFallback() {
