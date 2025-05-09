@@ -1,4 +1,5 @@
 import { Box, Table } from "@mantine/core";
+import { TableVirtuoso } from "react-virtuoso";
 import type { Route } from "./+types/_route";
 export async function clientLoader() {
 	return {
@@ -116,35 +117,44 @@ export async function clientLoader() {
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+	const virtualTable = (
+		<TableVirtuoso
+			style={{ height: "200px", overflowX: "auto" }}
+			data={loaderData.users}
+			components={{
+				Table: Table,
+				TableHead: Table.Thead,
+				TableBody: Table.Tbody,
+				TableRow: Table.Tr,
+			}}
+			fixedHeaderContent={() => (
+				<Table.Tr bg="var(--mantine-color-body)">
+					<Table.Th w={50}>id</Table.Th>
+					<Table.Th w={100}>Name</Table.Th>
+					<Table.Th w={50}>Age</Table.Th>
+					<Table.Th w={200}>Email</Table.Th>
+					<Table.Th w={100}>Role</Table.Th>
+					<Table.Th w={100}>Department</Table.Th>
+					<Table.Th w={100}>Join Date</Table.Th>
+				</Table.Tr>
+			)}
+			itemContent={(_index, user) => (
+				<>
+					<Table.Td>{user.id}</Table.Td>
+					<Table.Td>{user.name}</Table.Td>
+					<Table.Td>{user.age}</Table.Td>
+					<Table.Td>{user.email}</Table.Td>
+					<Table.Td>{user.role}</Table.Td>
+					<Table.Td>{user.department}</Table.Td>
+					<Table.Td>{user.joinDate}</Table.Td>
+				</>
+			)}
+		/>
+	);
 	return (
 		<Box p="md">
 			<p>Table</p>
-			<Table>
-				<Table.Thead>
-					<Table.Tr>
-						<Table.Th>id</Table.Th>
-						<Table.Th>Name</Table.Th>
-						<Table.Th>Age</Table.Th>
-						<Table.Th>Email</Table.Th>
-						<Table.Th>Role</Table.Th>
-						<Table.Th>Department</Table.Th>
-						<Table.Th>Join Date</Table.Th>
-					</Table.Tr>
-				</Table.Thead>
-				<Table.Tbody>
-					{loaderData.users.map((user) => (
-						<Table.Tr key={user.id}>
-							<Table.Td>{user.id}</Table.Td>
-							<Table.Td>{user.name}</Table.Td>
-							<Table.Td>{user.age}</Table.Td>
-							<Table.Td>{user.email}</Table.Td>
-							<Table.Td>{user.role}</Table.Td>
-							<Table.Td>{user.department}</Table.Td>
-							<Table.Td>{user.joinDate}</Table.Td>
-						</Table.Tr>
-					))}
-				</Table.Tbody>
-			</Table>
+			{virtualTable}
 		</Box>
 	);
 }
